@@ -1,10 +1,21 @@
 {
   "name": "ng-cond",
-  "version": "1.0.0",
-  "peerDependencies": {
-    "@angular/common": "^11.2.7",
-    "@angular/core": "^11.2.7"
+  "version": "1.0.6",
+  "private": false,
+  "decription": "an improved *ngIf angular directive",
+  "keywords": [
+	"angular",
+	"ngIf",
+	"*ngIf",
+	"multiple conditions"
+  ],
+  "author": {
+	"name": "Zohar Sabari",
+	"email": "zohar1000@gmail.com"
   },
+  "homepage": "https://github.com/zohar1000/ng-cond",
+  "repository": "github:zohar1000/ng-cond",
+  "license": "MIT",
   "dependencies": {
     "tslib": "^2.0.0"
   }

@@ -4,7 +4,7 @@
 * getting error/complete indications
 * you can specify options for performance and behaviour
   
-The package weight 3k and have no dependencies.<br/>
+The package weight 18k and have no dependencies.<br/>
 
 In the description below, a reference to observable will mean also a promise.
 
@@ -86,6 +86,16 @@ For multiple conditions, 'error' and 'complete' will be provided as objects cont
 </div>
 ```
 
+You can use the 'error' and 'complete' indications in the *elseTemplate*:
+```
+<div *ngCond="userCount$ as value; else elseTemplate">
+  user count: {{value}}
+</div>
+
+<ng-template #elseTemplate let-e="error">
+  <div *ngIf="e">Error: {{e.message}}</div>
+</ng-template>
+```
 
 ## Options
 

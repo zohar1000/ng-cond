@@ -4,11 +4,13 @@
 * getting error/complete indications
 * you can specify options for performance and behaviour
   
-The package weight 3k and have no dependencies.
+The package weight 18k and have no dependencies.<br/>
+
+In the description below, a reference to observable will mean also a promise.
 
 ## Some examples
 
-The examples below will use the following variables.
+The examples below will use the following variables:
 ```angular2html
 isInitialized: boolean
 data: any
@@ -16,13 +18,13 @@ users$: Observable<User[]>
 userCount$: Observable<number>
 ```
 
-A simple condition without observables is implemented the same way as *ngIf
+A simple condition without observables is implemented the same way as *ngIf.
 ```angular2html
 <div *ngCond="isInitialized && data">...</div>
 ```
 
 Observables are specified without the async pipe.<br/>
-You can refer the observable via template variable or directly in a case of BehaviourSubject.
+You can refer the observable via template variable or directly in case of a BehaviourSubject.
 ```angular2html
 <div *ngCond="users$ as users">
   <div>Users: {{users}}</div>
@@ -30,10 +32,11 @@ You can refer the observable via template variable or directly in a case of Beha
 </div>
 ```
 
-Multiple observables are not allowed in *ngIf, you either need to combine them or is multiple *ngIf directives.<br/><br/>
+Multiple observables are not allowed in *ngIf, you either need to combine them or is multiple *ngIf directives.<br/>
+
 *ngCond enable it by specifying ***multi: true***, conditions are passed as object of key/value pairs, each value can 
 be observable or expression (without observables).<br/>
-The template variable specified in 'as' will result in object containing the keys and the value for each key.<br/><br/>
+The template variable specified in 'as' will result in object containing the keys and the value for each key.<br/>
 
 The template will be shown when all the conditions are truthy.
 ```angular2html
@@ -63,7 +66,7 @@ Using then/else templates works the same as *ngIf, for example:
 ## error/complete indications
 
 The directive provides indications you can utilize in the template for observables/promises which has errors and/or
-have completed, they are provided as 'error' and 'complete' variables.<br/><br/>
+have completed, they are provided as 'error' and 'complete' variables.<br/>
 
 For a single condition, 'error' variable will hold the Error object and 'complete' variable will hold true or false.<br/>
 You can receive those values by giving template variable names for those provided variables.<br/>
@@ -81,6 +84,17 @@ For multiple conditions, 'error' and 'complete' will be provided as objects cont
     <div *ngCond="e.users">Error fetching users: {{e.users.message}}</div>
     <div *ngCond="c.count">The observable userCount$ has completed!</div>
 </div>
+```
+
+You can use the 'error' and 'complete' indications in the *elseTemplate*:
+```
+<div *ngCond="userCount$ as value; else elseTemplate">
+  user count: {{value}}
+</div>
+
+<ng-template #elseTemplate let-e="error">
+  <div *ngIf="e">Error: {{e.message}}</div>
+</ng-template>
 ```
 
 
@@ -109,10 +123,10 @@ You can override this behaviour by specifying the options:
 
 | Option        |               | 
 | ------------- |:-------------|
-| isShowOnValue | In **isShowOnValue: true** mode, a condition is regarded as falsy only if its value is undefined, all other values are regarded as truthy, including false and 0.<br/>default: false. |
-| isShowOnEmit  | In **isShowOnEmit: true** mode, a condition is regarded as falsy only if its value is undefined or null, all other values are regarded as truthy, including false and 0.<br/>default: false. |
-| isThrowOnError | You can specify if the directive will throw an error in case the observable/promise has error.<br/>default: false |
-| isClearValueOnError | When an observable emits value and after that emits error, then the value still remains and shown in the template.<br/> specifying **true** will change the observable value to undefined upon error.<br/>default: false |
+| isShowOnValue | when **true**, a condition is regarded as falsy only if its value is undefined, all other values are regarded as truthy, including false and 0.<br/>default: false. |
+| isShowOnEmit  | when **true**, a condition is regarded as falsy only if its value is undefined or null, all other values are regarded as truthy, including false and 0.<br/>default: false. |
+| isThrowOnError | you can specify if the directive will throw an error in case the observable/promise has error.<br/>default: false |
+| isClearValueOnError | when an observable emits value and after that emits error, then the value still remains and shown in the template.<br/> specifying **true** will change the observable value to undefined upon error.<br/>default: false |
 
 
 ## Installation

@@ -2,9 +2,13 @@
 {
   "extends": "./tsconfig.lib.json",
   "compilerOptions": {
+	"sourceMap": false,
     "declarationMap": false
   },
   "angularCompilerOptions": {
-    "enableIvy": false
-  }
+    "enableIvy": false,
+	"sourceMap": false,
+	"disableTypeScriptVersionCheck": false
+  },
+  "sourceMap": false
 }

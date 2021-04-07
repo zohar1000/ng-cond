@@ -1,21 +1,27 @@
 {
   "name": "ng-cond",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-	"copy:readme:linux": "cp ./README.md ./projects/ng-cond/README.md",
-	"copy:readme:win": "copy ./README.md ./projects/ng-cond/README.md /V /Y",
-	"lib:build": "npm run copy:readme:linux && ng build ng-cond --prod",
-	"lib:link": "npm run lib:build && cd dist/ng-cond && npm link",
-	"lib:publish": "npm run lib:build && cd dist/ng-cond && npm publish",
-	"tester": "ng s tester"
+    "serve:tester": "ng s tester",
+    "build:cond": "ng build --prod && node ./lib-utils --uglify --copy-readme",
+    "publish:cond": "ng build --prod && node ./lib-utils --uglify --copy-readme --bump-version --publish"
   },
   "private": false,
+  "decription": "an improved *ngIf angular directive",
+  "keywords": [
+    "angular",
+    "ngIf",
+    "*ngIf",
+    "multiple conditions"
+  ],
+  "author": {
+    "name": "Zohar Sabari",
+    "email": "zohar1000@gmail.com"
+  },
+  "homepage": "https://github.com/zohar1000/ng-cond",
+  "repository": "github:zohar1000/ng-cond",
+  "license": "MIT",
   "dependencies": {
     "@angular/animations": "~11.2.7",
     "@angular/common": "~11.2.7",
@@ -30,23 +36,17 @@
     "zone.js": "~0.11.3"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^11.1.1",
     "@angular-devkit/build-angular": "~0.1102.6",
     "@angular/cli": "~11.2.6",
     "@angular/compiler-cli": "~11.2.7",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
-    "jasmine-core": "~3.6.0",
-    "jasmine-spec-reporter": "~5.0.0",
-    "karma": "~6.1.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.0.3",
-    "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-lib-utils": "^1.0.4",
     "ng-packagr": "^11.0.0",
-    "protractor": "~7.0.0",
+    "terser": "^5.6.1",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
-    "typescript": "~4.1.5"
+    "tslint": "~6.1.0"
   }
 }

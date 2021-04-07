@@ -2,5 +2,6 @@
  * Public API Surface of ng-cond
  */
 
-export * from './lib/ng-cond.directive';
-export * from './lib/ng-cond.module';
+export { CondOpts } from './lib/models/cond-opts.model';
+export { NgCondDirective } from './lib/ng-cond.directive';
+export { NgCondModule } from './lib/ng-cond.module';

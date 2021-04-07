@@ -19,21 +19,21 @@ import { NG_COND_OPTS_TOKEN } from './tokens/ng-cond-opts.token';
 
 @Directive({ selector: '[ngCond]' })
 export class NgCondDirective implements OnDestroy {
-  private readonly KEYWORD = 'NgCond';
-  private readonly SINGLE_KEY = '@singleCond';
-  private readonly OPTS_KEYS = ['isShowOnValue', 'isShowOnEmit', 'isThrowOnError', 'isMarkForCheck', 'isDetectChanges', 'isClearValueOnError'];
-  private isShow = false;
-  private isMulti = false;
-  private conds: Cond[];
-  private opts: CondOpts = {};
-  private isUpdateViewPending = false;
-  private context: NgCondContext = new NgCondContext();
-  private elseTemplateRef: TemplateRef<NgCondContext> | null = null;
-  private thenViewRef: EmbeddedViewRef<NgCondContext> | null = null;
-  private elseViewRef: EmbeddedViewRef<NgCondContext> | null = null;
-  private error;
-  private complete;
-  private exp;
+  private readonly _KEYWORD = 'NgCond';
+  private readonly _SINGLE_KEY = '@singleCond';
+  private readonly _OPTS_KEYS = ['isShowOnValue', 'isShowOnEmit', 'isThrowOnError', 'isMarkForCheck', 'isDetectChanges', 'isClearValueOnError'];
+  private _isShow = false;
+  private _isMulti = false;
+  private _conds: Cond[];
+  private _opts: CondOpts = {};
+  private _isUpdateViewPending = false;
+  private _context: NgCondContext = new NgCondContext();
+  private _elseTemplateRef: TemplateRef<NgCondContext> | null = null;
+  private _thenViewRef: EmbeddedViewRef<NgCondContext> | null = null;
+  private _elseViewRef: EmbeddedViewRef<NgCondContext> | null = null;
+  private _exp;
+  private _error;
+  private _complete;
 
   constructor(
       @Optional() @Inject(NG_COND_OPTS_TOKEN) opts: CondOpts,
@@ -41,11 +41,11 @@ export class NgCondDirective implements OnDestroy {
       private thenTemplateRef: TemplateRef<NgCondContext<any>>,
       private cdr: ChangeDetectorRef,
       ngZone: NgZone) {
-console.log(this.constructor.name, 'opts:', opts);
+console.log('ngCond con - 24 - ivy');
     const isZone = ngZone instanceof NgZone;
-    this.opts.isMarkForCheck = isZone;
-    this.opts.isDetectChanges = !isZone;
-    if (opts) this.OPTS_KEYS.forEach(key => { if (opts.hasOwnProperty(key)) this.opts[key] = Boolean(opts[key]); });
+    this._opts.isMarkForCheck = isZone;
+    this._opts.isDetectChanges = !isZone;
+    if (opts) this._OPTS_KEYS.forEach(key => { if (opts.hasOwnProperty(key)) this._opts[key] = Boolean(opts[key]); });
   }
 
   /***********************/
@@ -53,40 +53,36 @@ console.log(this.constructor.name, 'opts:', opts);
   /***********************/
 
   @Input() set ngCond(exp) {
-    this.exp = exp;
+    this._exp = exp;
     setTimeout(() => {
-      const exps: Exp[] = this.getParsedExp(exp);
-      if (!this.conds) this.initConds(exps);
-      this.setConds(exps);
-      setTimeout(this.updateViewOnInput.bind(this));
+      const exps: Exp[] = this._getParsedExp(exp);
+      if (!this._conds) this._initConds(exps);
+      this._setConds(exps);
+      setTimeout(this._updateViewOnInput.bind(this));
     });
   }
 
-  @Input()
-  set ngCondMulti(isMulti: boolean) {
-    this.isMulti = isMulti;
+  @Input() set ngCondMulti(isMulti: boolean) {
+    this._isMulti = isMulti;
   }
 
-  @Input()
-  set ngCondThen(templateRef: TemplateRef<NgCondContext> | null) {
-    this.assertTemplate(`ng${this.KEYWORD}Then`, templateRef);
+  @Input() set ngCondThen(templateRef: TemplateRef<NgCondContext> | null) {
+    this._assertTemplate(`ng${this._KEYWORD}Then`, templateRef);
     this.thenTemplateRef = templateRef;
-    this.thenViewRef = null;  // clear previous view if any.
-    setTimeout(this.updateViewOnInput.bind(this));
+    this._thenViewRef = null;  // clear previous view if any.
+    setTimeout(this._updateViewOnInput.bind(this));
   }
 
-  @Input()
-  set ngCondElse(templateRef: TemplateRef<NgCondContext> | null) {
-    this.assertTemplate(`ng${this.KEYWORD}Else`, templateRef);
-    this.elseTemplateRef = templateRef;
-    this.elseViewRef = null;  // clear previous view if any.
-    setTimeout(this.updateViewOnInput.bind(this));
+  @Input() set ngCondElse(templateRef: TemplateRef<NgCondContext> | null) {
+    this._assertTemplate(`ng${this._KEYWORD}Else`, templateRef);
+    this._elseTemplateRef = templateRef;
+    this._elseViewRef = null;  // clear previous view if any.
+    setTimeout(this._updateViewOnInput.bind(this));
   }
 
-  @Input()
-  set ngCondOpts(opts) {
+  @Input() set ngCondOpts(opts: CondOpts) {
     if (!opts || typeof opts !== 'object' || Object.keys(opts).length === 0) return;
-    this.OPTS_KEYS.forEach(key => this.opts[key] = Boolean(opts[key]));
+    this._OPTS_KEYS.forEach(key => this._opts[key] = Boolean(opts[key]));
    }
 
 
@@ -94,92 +90,90 @@ console.log(this.constructor.name, 'opts:', opts);
   /*      I T E M S      */
   /***********************/
 
-  getParsedExp(exp) {
-    const isSingle = exp instanceof Observable || exp instanceof Promise || typeof exp !== 'object' || !this.isMulti;
-    this.isMulti = !isSingle;
-    if (!this.isMulti) {
-      return [{ key: this.SINGLE_KEY, cond: exp }];
+  private _getParsedExp(exp) {
+    const isSingle = exp instanceof Observable || exp instanceof Promise || typeof exp !== 'object' || !this._isMulti;
+    this._isMulti = !isSingle;
+    if (!this._isMulti) {
+      return [{ key: this._SINGLE_KEY, cond: exp }];
     } else {
       const exps = Object.keys(exp).map(key => ({ key, cond: exp[key] }));
       if (exps.length === 0) {
-        throw new Error(`An empty object was passed to ${this.KEYWORD}.`);
+        throw new Error(`An empty object was passed to ${this._KEYWORD}.`);
       }
       return exps;
     }
   }
 
-  initConds(exps: Exp[]) {
+  _initConds(exps: Exp[]) {
     const len = exps.length;
-    this.conds = new Array(len);
+    this._conds = new Array(len);
     for (let i = 0; i < len; i++) {
-      this.conds[i] = { value: undefined, key: exps[i].key };
+      this._conds[i] = { value: undefined, key: exps[i].key };
     }
   }
 
-  setConds(exps: Exp[]) {
+  _setConds(exps: Exp[]) {
     for (let i = 0, len = exps.length; i < len; i++) {
-      this.setDirectCond(exps[i].cond, i);
+      this._setDirectCond(exps[i].cond, i);
     }
   }
 
-  protected setDirectCond(cond, i) {
+  _setDirectCond(cond, i) {
     if (cond instanceof Observable) {
-      this.setItemObservable(cond, i);
+      this._setItemObservable(cond, i);
     } else if (cond instanceof Promise) {
-      this.setItemPromise(cond, i);
+      this._setItemPromise(cond, i);
     } else {
-      if (this.conds[i].subscription) this.clearItem(this.conds[i], true);
-      this.conds[i].value = cond;
+      if (this._conds[i].subscription) this._clearItem(this._conds[i], true);
+      this._conds[i].value = cond;
     }
   }
 
-  private setItemObservable(obs, i) {
-    if (this.conds[i].obs && this.conds[i].obs !== obs) this.clearItem(this.conds[i], true);
-    if (!this.conds[i].obs) {
-      this.conds[i].obs = obs;
-      this.conds[i].subscription = obs
+  _setItemObservable(obs, i) {
+    if (this._conds[i].obs && this._conds[i].obs !== obs) this._clearItem(this._conds[i], true);
+    if (!this._conds[i].obs) {
+      this._conds[i].obs = obs;
+      this._conds[i].subscription = obs
         .pipe(distinctUntilChanged())
         .subscribe(
-            value => this.onNext(this.conds[i], value),
-            e => this.onError(this.conds[i], e),
-            () => this.onComplete(this.conds[i])
+            value => this._onNext(this._conds[i], value),
+            e => this._onError(this._conds[i], e),
+            () => this._onComplete(this._conds[i])
         );
     }
   }
 
-  private setItemPromise(promise, i) {
-    if (this.conds[i].promise && this.conds[i].promise !== promise) this.clearItem(this.conds[i], true);
-    if (!this.conds[i].promise) {
-      this.conds[i].promise = promise;
-      this.conds[i].subscription = promise.then(value => {
-        this.onNext(this.conds[i], value);
-        this.onComplete(this.conds[i]);
-      }, e => this.onError(this.conds[i], e));
+  _setItemPromise(promise, i) {
+    if (this._conds[i].promise && this._conds[i].promise !== promise) this._clearItem(this._conds[i], true);
+    if (!this._conds[i].promise) {
+      this._conds[i].promise = promise;
+      this._conds[i].subscription = promise.then(value => {
+        this._onNext(this._conds[i], value);
+        this._onComplete(this._conds[i]);
+      }, e => this._onError(this._conds[i], e));
     }
   }
 
 
-  private onNext(cond: Cond, value) {
+  _onNext(cond: Cond, value) {
     cond.value = value;
-    if (this.error) delete this.error[cond.key];
-    if (this.complete) delete this.complete[cond.key];
-    this.updateView();
+    if (this._error) delete this._error[cond.key];
+    if (this._complete) delete this._complete[cond.key];
+    this._updateView();
   }
 
-  onError(cond: Cond, e) {
-    if (!this.error) this.error = {};
-    this.error[cond.key] = e;
-    if (this.opts.isClearValueOnError) cond.value = undefined;
-    this.updateView();
-    if (this.opts.isThrowOnError) {
-      throw e;
-    }
+  _onError(cond: Cond, e) {
+    if (!this._error) this._error = {};
+    this._error[cond.key] = e;
+    if (this._opts.isClearValueOnError) cond.value = undefined;
+    this._updateView();
+    if (this._opts.isThrowOnError) throw e;
   }
 
-  onComplete(cond: Cond) {
-    if (!this.complete) this.complete = {};
-    this.complete[cond.key] = true;
-    this.updateView();
+  _onComplete(cond: Cond) {
+    if (!this._complete) this._complete = {};
+    this._complete[cond.key] = true;
+    this._updateView();
   }
 
 
@@ -187,71 +181,63 @@ console.log(this.constructor.name, 'opts:', opts);
   /*      D I S P L A Y        */
   /*****************************/
 
-  private updateViewOnInput() {
-    if (this.isUpdateViewPending) return;
-    this.isUpdateViewPending = true;
+  _updateViewOnInput() {
+    if (this._isUpdateViewPending) return;
+    this._isUpdateViewPending = true;
     setTimeout(() => {
-      this.isUpdateViewPending = false;
-      this.updateView();
+      this._isUpdateViewPending = false;
+      this._updateView();
     });
   }
 
-  private updateView() {
-    this.isShow = this.conds.every(cond =>
-      this.opts.isShowOnValue && cond.value !== undefined ||
-      this.opts.isShowOnEmit && (cond.value !== undefined && cond.value !== null) ||
+  _updateView() {
+    this._isShow = this._conds.every(cond =>
+      this._opts.isShowOnValue && cond.value !== undefined ||
+      this._opts.isShowOnEmit && (cond.value !== undefined && cond.value !== null) ||
       Boolean(cond.value)
     );
 
-    this.setValue();
-    if (this.isShow) {
-      if (!this.thenViewRef) {
+    this._setValue();
+    if (this._isShow) {
+      if (!this._thenViewRef) {
         this.viewContainer.clear();
-        this.elseViewRef = null;
-        if (this.thenTemplateRef) {
-          this.thenViewRef =
-            this.viewContainer.createEmbeddedView(this.thenTemplateRef, this.context);
-        }
+        this._elseViewRef = null;
+        if (this.thenTemplateRef) this._thenViewRef = this.viewContainer.createEmbeddedView(this.thenTemplateRef, this._context);
       }
     } else {
-      if (!this.elseViewRef) {
+      if (!this._elseViewRef) {
         this.viewContainer.clear();
-        this.thenViewRef = null;
-        if (this.elseTemplateRef) {
-          this.elseViewRef =
-            this.viewContainer.createEmbeddedView(this.elseTemplateRef, this.context);
-        }
+        this._thenViewRef = null;
+        if (this._elseTemplateRef) this.viewContainer.createEmbeddedView(this._elseTemplateRef, this._context);
       }
     }
 
-    if (this.opts.isMarkForCheck) this.cdr.markForCheck();
-    if (this.opts.isDetectChanges) this.cdr.detectChanges();
+    if (this._opts.isMarkForCheck) this.cdr.markForCheck();
+    if (this._opts.isDetectChanges) this.cdr.detectChanges();
   }
 
-  setValue() {
-    if (!this.isMulti) {
-      this.context.$implicit = this.context.ngCond = this.conds[0].value;
-      this.context.complete = this.complete ? this.complete[this.SINGLE_KEY] : false;
-      this.context.error = this.error ? this.error[this.SINGLE_KEY] : undefined;
+  _setValue() {
+    if (!this._isMulti) {
+      this._context.$implicit = this._context.ngCond = this._conds[0].value;
+      this._context.complete = this._complete ? this._complete[this._SINGLE_KEY] : false;
+      this._context.error = this._error ? this._error[this._SINGLE_KEY] : undefined;
     } else {
       const conds = {};
-      for (let i = 0, len = this.conds.length; i < len; i++) {
-        conds[this.conds[i].key] = this.conds[i].value;
+      for (let i = 0, len = this._conds.length; i < len; i++) {
+        conds[this._conds[i].key] = this._conds[i].value;
       }
-      this.context.$implicit = this.context.ngCond = conds;
-      this.context.complete = this.complete || {};
-      this.context.error = this.error || {};
+      this._context.$implicit = this._context.ngCond = conds;
+      this._context.complete = this._complete || {};
+      this._context.error = this._error || {};
     }
   }
 
-  private assertTemplate(property: string, templateRef: TemplateRef<any>|null): void {
+  _assertTemplate(property: string, templateRef: TemplateRef<any>|null): void {
     const isTemplateRefOrNull = Boolean(!templateRef || templateRef.createEmbeddedView);
-    if (!isTemplateRefOrNull) {
-      throw new Error(`Error passing wrong value to ${this.KEYWORD} - ${property} must be a template`);
-    }
+    if (!isTemplateRefOrNull) throw new Error(`Error passing wrong value to ${this._KEYWORD} - ${property} must be a template`);
   }
 
-  private clearItem(cond, isSetForNewCond) {
+  _clearItem(cond, isSetForNewCond) {
     if (cond.subscription && !cond.subscription.closed) cond.subscription.unsubscribe();
     cond.value = '';
     if (cond.subscription) cond.subscription = null;
@@ -264,6 +250,6 @@ console.log(this.constructor.name, 'opts:', opts);
   }
 
   public ngOnDestroy() {
-    if (this.conds) this.conds.forEach(cond => this.clearItem(cond, false));
+    if (this._conds) this._conds.forEach(cond => this._clearItem(cond, false));
   }
 }

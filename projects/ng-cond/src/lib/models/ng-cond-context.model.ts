@@ -1,7 +1,6 @@
 export class NgCondContext<T = unknown> {
-  public $implicit: any = null!;
-  public ngCond?: any = null!;
-  public ngConds?: any = null!;
+  public $implicit;
+  public ngCond;
   public complete: any;
   public error: any;
 }
