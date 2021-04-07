@@ -1,0 +1,71 @@
+
+<div>
+  <a [routerLink]="'comp1'">Comp1</a>&nbsp;&nbsp;<a [routerLink]="'comp2'">Comp2</a>
+</div>
+
+<router-outlet></router-outlet>
+
+<h1>Tester</h1>
+
+<h2>Single condition</h2>
+
+<!--
+<div *ngCond="title">title: {{title}}</div>
+<div *ngCond="title as value">title: {{value}}</div>
+<div *ngCond="someValue$">some value: {{someValue$.value}}</div>
+<div *ngCond="someValue$ as value">some value: {{value}}</div>
+<br/>
+
+<div *ngCond="title; opts: {isMulti: true}">title: {{title}}</div>
+<div *ngCond="title as value">title: {{value}}</div>
+<div *ngCond="someValue$">some value: {{someValue$.value}}</div>
+<div *ngCond="someValue$ as value">some value: {{value}}</div>
+-->
+
+<h4>Error</h4>
+<div *ngCond="someError$ as value; let e=error; let c=complete; else elseTemplate; opts: { isClearValueOnError: false }">
+  <div>Then Template:</div>
+  value: {{value}}
+  <div *ngIf="e">An error happened: {{e.message}}</div>
+  <div *ngIf="c">Completed!</div>
+</div>
+
+<ng-template #elseTemplate let-e="error" let-c="complete">
+  <div>Else Template:</div>
+  <div *ngIf="e">Error: {{e.message}}</div>
+  <div *ngIf="c">Complete!</div>
+  <div>Complete value: {{c}}</div>
+</ng-template>
+
+
+
+<!--
+<h4>NgIf</h4>
+<div *ngIf="someError$ | async as value; else elseTemplate">
+  value: {{value}}
+</div>
+
+<ng-template #elseTemplate>
+  Error!!
+</ng-template>
+-->
+
+
+<!--<div *ngCond="someError$ as value; let e=error">
+  value: {{value}}
+  <div *ngIf="e?.value">An error happened: {{e.value.message}}</div>
+</div>-->
+
+<!--
+<h2>Multiple Conditions</h2>
+
+<div *ngCond="{ title: title } as value; opts: {isMulti: true}">title: {{value.title}}</div>
+<div *ngCond="{ title: title, message: someValue$ } as value; opts: {isMulti: true}">title: {{value.title}}</div>
+<div *ngCond="{ title: title, message: someValue$ } as value; opts: {isMulti: true}">some value: {{value.message}}</div>
+
+<h4>Error</h4>
+<div *ngCond="{ someError: someError$ } as value; let e=error; opts: {isMulti: true}">
+  value: {{value.someError}}
+  <div *ngIf="e.someError">An error happened: {{e.someError.message}}</div>
+</div>
+-->
