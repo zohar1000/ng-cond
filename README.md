@@ -1,4 +1,4 @@
-*ngCond is an improved version of *ngIf, it has the following advantages:
+*ngCond is an improved version of *ngIf directive, it has the following advantages:
 * working with multiple observables and/or promises
 * no need for async pipe, the directive subscribes/unsubscribes to the observable
 * getting error/complete indications
@@ -8,7 +8,7 @@ The package weight 3k and have no dependencies.
 
 ## Some examples
 
-The examples below will use those component variables, some are observables and some are not.
+The examples below will use the following variables.
 ```angular2html
 isInitialized: boolean
 data: any
@@ -22,7 +22,7 @@ A simple condition without observables is implemented the same way as *ngIf
 ```
 
 Observables are specified without the async pipe.<br/>
-You can refer the observable via template variable or directly in case of BehaviourSubject.
+You can refer the observable via template variable or directly in a case of BehaviourSubject.
 ```angular2html
 <div *ngCond="users$ as users">
   <div>Users: {{users}}</div>
@@ -30,10 +30,10 @@ You can refer the observable via template variable or directly in case of Behavi
 </div>
 ```
 
-Multiple observables are not allowed in *ngIf, you either need to combine them or is multiple *ngIf directives.<br/>
+Multiple observables are not allowed in *ngIf, you either need to combine them or is multiple *ngIf directives.<br/><br/>
 *ngCond enable it by specifying ***multi: true***, conditions are passed as object of key/value pairs, each value can 
 be observable or expression (without observables).<br/>
-The template variable, specified in 'as', will result in object containing the keys and the value for each key.<br/><br/>
+The template variable specified in 'as' will result in object containing the keys and the value for each key.<br/><br/>
 
 The template will be shown when all the conditions are truthy.
 ```angular2html
@@ -90,8 +90,6 @@ You can specify options for performance and behaviour by specifying 'opts' objec
 Options specified on a directive will have effect only for that directive, you can override the default options
 values as described in the <em>Installation</em> section below. 
 
-The interface <em>CondOpts</em> holds the list of options.<br/>
-
 
 #### Performance options:
 
@@ -135,10 +133,10 @@ import { NgCondModule } from 'ng-cond';
 export class SharedModule {}
 ```
 
+#### overriding default options
+
 You can globally override the default options values described above.<br/>
 When importing the module, call forChild() and pass the options you want to override as a parameter.
-
-shared.module.ts
 ```angular2html
 import { NgCondModule } from 'ng-cond';
 

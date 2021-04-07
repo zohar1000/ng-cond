@@ -1,6 +1,6 @@
 {
   "name": "ng-cond",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
 	"copy:readme:linux": "cp ./README.md ./projects/ng-cond/README.md",
 	"copy:readme:win": "copy ./README.md ./projects/ng-cond/README.md /V /Y",
-	"lib:build": "ng build ng-cond --prod",
+	"lib:build": "npm run copy:readme:linux && ng build ng-cond --prod",
 	"lib:link": "npm run lib:build && cd dist/ng-cond && npm link",
 	"lib:publish": "npm run lib:build && cd dist/ng-cond && npm publish",
 	"tester": "ng s tester"
