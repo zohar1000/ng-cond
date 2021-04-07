@@ -4,11 +4,13 @@
 * getting error/complete indications
 * you can specify options for performance and behaviour
   
-The package weight 3k and have no dependencies.
+The package weight 3k and have no dependencies.<br/>
+
+In the description below, a reference to observable will mean also a promise.
 
 ## Some examples
 
-The examples below will use the following variables.
+The examples below will use the following variables:
 ```angular2html
 isInitialized: boolean
 data: any
@@ -16,13 +18,13 @@ users$: Observable<User[]>
 userCount$: Observable<number>
 ```
 
-A simple condition without observables is implemented the same way as *ngIf
+A simple condition without observables is implemented the same way as *ngIf.
 ```angular2html
 <div *ngCond="isInitialized && data">...</div>
 ```
 
 Observables are specified without the async pipe.<br/>
-You can refer the observable via template variable or directly in a case of BehaviourSubject.
+You can refer the observable via template variable or directly in case of a BehaviourSubject.
 ```angular2html
 <div *ngCond="users$ as users">
   <div>Users: {{users}}</div>
