@@ -1,10 +1,10 @@
 *ngCond is an improved version of *ngIf directive, it has the following advantages:
 * working with multiple observables and/or promises
-* no need for async pipe, the directive subscribes/unsubscribes to the observable
+* no need for async pipe, the directive subscribes/unsubscribes to the observable/promise
 * getting error/complete indications
 * you can specify options for performance and behaviour
   
-The package weight 18k and have no dependencies.<br/>
+The package weight 1.5k and have no dependencies.<br/>
 
 In the description below, a reference to observable will mean also a promise.
 
@@ -18,7 +18,7 @@ users$: Observable<User[]>
 userCount$: Observable<number>
 ```
 
-A simple condition without observables is implemented the same way as *ngIf.
+A simple condition without observables is implemented the same way as *ngIf:
 ```angular2html
 <div *ngCond="isInitialized && data">...</div>
 ```
