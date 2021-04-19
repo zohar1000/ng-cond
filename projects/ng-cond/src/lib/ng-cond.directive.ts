@@ -41,7 +41,6 @@ export class NgCondDirective implements OnDestroy {
       private thenTemplateRef: TemplateRef<NgCondContext<any>>,
       private cdr: ChangeDetectorRef,
       ngZone: NgZone) {
-console.log('ngCond con - 24 - ivy');
     const isZone = ngZone instanceof NgZone;
     this._opts.isMarkForCheck = isZone;
     this._opts.isDetectChanges = !isZone;

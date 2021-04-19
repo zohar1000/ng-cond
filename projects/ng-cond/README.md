@@ -3,7 +3,7 @@
 * no need for async pipe, the directive subscribes/unsubscribes to the observable
 * getting error/complete indications
 * you can specify options for performance and behaviour
-  
+
 The package weight 18k and have no dependencies.<br/>
 
 In the description below, a reference to observable will mean also a promise.
@@ -34,7 +34,7 @@ You can refer the observable via template variable or directly in case of a Beha
 
 Multiple observables are not allowed in *ngIf, you either need to combine them or is multiple *ngIf directives.<br/>
 
-*ngCond enable it by specifying ***multi: true***, conditions are passed as object of key/value pairs, each value can 
+*ngCond enable it by specifying ***multi: true***, conditions are passed as object of key/value pairs, each value can
 be observable or expression (without observables).<br/>
 The template variable specified in 'as' will result in object containing the keys and the value for each key.<br/>
 
@@ -97,12 +97,11 @@ You can use the 'error' and 'complete' indications in the *elseTemplate*:
 </ng-template>
 ```
 
-
 ## Options
 
 You can specify options for performance and behaviour by specifying 'opts' object with the options.<br/>
 Options specified on a directive will have effect only for that directive, you can override the default options
-values as described in the <em>Installation</em> section below. 
+values as described in the <em>Installation</em> section below.
 
 
 #### Performance options:
@@ -140,9 +139,9 @@ After that, import NgCondModule in your shared module.
 import { NgCondModule } from 'ng-cond';
 
 @NgModule(
-  imports: [
-    NgxCondModule
-  ]
+imports: [
+NgxCondModule
+]
 })
 export class SharedModule {}
 ```
@@ -155,12 +154,12 @@ When importing the module, call forChild() and pass the options you want to over
 import { NgCondModule } from 'ng-cond';
 
 @NgModule({
-  imports: [
-      NgCondModule.forChild({ isClearValueOnError: true })
-  ],
-  exports: [
-    NgCondModule
-  ]
+imports: [
+NgCondModule.forChild({ isClearValueOnError: true })
+],
+exports: [
+NgCondModule
+]
 })
 export class SharedModule {}
 ```

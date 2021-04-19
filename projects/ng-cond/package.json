@@ -1,6 +1,6 @@
 {
   "name": "ng-cond",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "private": false,
   "decription": "an improved *ngIf angular directive",
   "keywords": [
