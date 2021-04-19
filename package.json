@@ -1,6 +1,6 @@
 {
   "name": "ng-cond",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "scripts": {
     "ng": "ng",
     "serve:tester": "ng s tester",

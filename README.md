@@ -140,7 +140,7 @@ import { NgCondModule } from 'ng-cond';
 
 @NgModule(
   imports: [
-    NgxCondModule
+    NgCondModule
   ]
 })
 export class SharedModule {}
