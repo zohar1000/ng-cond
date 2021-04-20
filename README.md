@@ -74,8 +74,8 @@ export SomeComponent class {
   person$ = new BehaviorSubject<Person>(this.person);
 }
 
-Now when you type person$.value. your editor will provide you with intellisense and open a list with all 3 properties:
-![](https://github.com/zohar1000/ng-cond/tree/main/projects/ng-cond/assets/intellisense.png)
+Now when you type person$.value. your editor will provide you with intellisense and open a list with all 3 properties:<br/>
+![intellisense](https://github.com/zohar1000/ng-cond/blob/main/projects/ng-cond/assets/intellisense.png "Intellisense")
 
 ```
 ## forget async pipe
