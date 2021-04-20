@@ -76,7 +76,7 @@ export SomeComponent class {
 
 ```
 
-Now when you type person$.value. your editor will provide you with intellisense and open a list with all 3 properties:<br/>
+Now when you type person$.value. your editor will provide you with intellisense and open a list with all 3 properties:<br/><br/>
 ![intellisense](https://github.com/zohar1000/ng-cond/blob/main/projects/ng-cond/assets/intellisense.png "Intellisense")
 
 ## forget async pipe
