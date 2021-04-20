@@ -69,3 +69,8 @@
   <div *ngIf="e.someError">An error happened: {{e.someError.message}}</div>
 </div>
 -->
+
+
+<div *ngCond="{ person: person$, data: data$ }">
+  person: {{ person$.value.age }}
+</div>

@@ -1,12 +1,25 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+export interface Person {
+  firstName: string;
+  lastName: string;
+  age: number;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  person: Person = {
+    firstName: 'David',
+    lastName: 'Bowie',
+    age: 35
+  };
+  person$ = new BehaviorSubject<Person>(this.person);
+  data$ = new BehaviorSubject(null);
   title = 'Tester App';
   someValue$ = new BehaviorSubject(null);
   users$ = new BehaviorSubject(null);
