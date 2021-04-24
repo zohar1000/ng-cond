@@ -2,9 +2,9 @@
 * forget async pipe, the directive subscribes/unsubscribes to the observable/promise
 * working with multiple observables and/or promises
 * getting error/complete indications
-* you can specify options for performance and behaviour
+* you can specify options for performance and behavior
   
-The package weight 1.5k and have no dependencies.<br/>
+The package weight 1k and have no dependencies.<br/>
 
 In the description below, referencing observables will include promises as well.
 
@@ -26,7 +26,7 @@ A simple condition without observables is implemented the same way as *ngIf:
 ```
 
 Observables are specified without the async pipe.<br/>
-You can refer the observable via template variable, for BehaviourSubjects you can use the 'value' property.
+You can refer the observable via template variable, for BehaviorSubjects you can use the 'value' property.
 ```angular2html
 <div *ngCond="users$ as users">
   <div>Users: {{users}}</div>
@@ -42,7 +42,7 @@ Multiple observables are not allowed in *ngIf, you either need to combine them o
 be observable or expression (the expression should be without any observables).<br/>
 The template variable specified in 'as' will result in an object containing the keys with the observable value for each key.<br/>
 
-BehaviourSubjects can be referred directly (userCount$ in the example below).<br/>
+BehaviorSubjects can be referred directly (userCount$ in the example below).<br/>
 
 The template will be shown when all the conditions are truthy.
 ```angular2html
@@ -54,7 +54,7 @@ The template will be shown when all the conditions are truthy.
 
 #### Intellisense support
 
-If your work with typescript and you bind a BehaviourSubject with a type, then your editor will provide you with 
+If your work with typescript and you bind a BehaviorSubject with a type, then your editor will provide you with 
 intellisense when editing the template (this applies to *ngIf as well).<br/>
 
 Provided the interface Person:
@@ -136,7 +136,7 @@ You can use the 'error' and 'complete' indications in the *elseTemplate*:
 
 ## Options
 
-You can specify options for performance and behaviour by specifying 'opts' object with the options.<br/>
+You can specify options for performance and behavior by specifying 'opts' object with the options.<br/>
 Options specified on a directive will have effect only for that directive, you can override the default options
 values as described in the <em>Installation</em> section below. 
 
@@ -147,7 +147,7 @@ When working with observables and async pipe, the pipe calls markForCheck() meth
 This is not always enough when working in zone less mode ({ngZone: 'noop'} in bootstrap), in this case detectChanges() should be called.</br>
 The directive checks the application zone mode and calls the appropriate method, markForCheck() in zone mode and detectChanges() in zone less mode.<br/>
 
-You can override this behaviour by specifying the options:
+You can override this behavior by specifying the options:
 
 | Option        |               | 
 |------------- |:-------------|
@@ -155,7 +155,7 @@ You can override this behaviour by specifying the options:
 | isDetectChanges | regardless of zone mode, call detectChanges() per each change or not.<br/>default: method is called only in zone less mode |
 
 
-#### Behaviour options:
+#### Behavior options:
 
 | Option        |               | 
 | ------------- |:-------------|

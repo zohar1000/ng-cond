@@ -8,5 +8,5 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class Comp1Component {
   title = 'Comp1 Title';
-  comp1$ = new BehaviorSubject('Some Comp1 Data');
+  comp1$ = new BehaviorSubject('==> Comp1 Title');
 }
