@@ -1,5 +1,5 @@
 *ngCond is an improved version of *ngIf directive, it has the following advantages:
-* forget async pipe, the directive subscribes/unsubscribes to the observable/promise
+* forget about async pipe, the directive subscribes/unsubscribes to the observable/promise
 * working with multiple observables and/or promises
 * getting error/complete indications
 * you can specify options for performance and behavior
@@ -79,7 +79,7 @@ export SomeComponent class {
 Now when you type person$.value. your editor will provide you with intellisense and open a list with all 3 properties:<br/><br/>
 ![intellisense](https://github.com/zohar1000/ng-cond/blob/main/projects/ng-cond/assets/intellisense.png "Intellisense")
 
-## forget async pipe
+## forget about async pipe
 
 The directive checks if the condition is observable, promise or regular boolean expression.<br/>
 In case of observable, the directive subscribes on init and unsubscribe on destroy. for promises the directive

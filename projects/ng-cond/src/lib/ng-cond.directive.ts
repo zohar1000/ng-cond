@@ -145,8 +145,7 @@ export class NgCondDirective implements OnDestroy {
   _setItemPromise(promise, i) {
     if (this._conds[i].promise && this._conds[i].promise !== promise) this._clearItem(this._conds[i], true);
     if (!this._conds[i].promise) {
-      this._conds[i].promise = promise;
-      this._conds[i].subscription = promise.then(value => {
+      this._conds[i].promise = promise.then(value => {
         this._onNext(this._conds[i], value);
         this._onComplete(this._conds[i]);
       }, e => this._onError(this._conds[i], e));
@@ -240,6 +239,7 @@ export class NgCondDirective implements OnDestroy {
     if (cond.subscription && !cond.subscription.closed) cond.subscription.unsubscribe();
     cond.value = '';
     if (cond.subscription) cond.subscription = null;
+    if (cond.promise) cond.promise = null;
     if (isSetForNewCond) {
       delete cond.obs;
       delete cond.subscription;
